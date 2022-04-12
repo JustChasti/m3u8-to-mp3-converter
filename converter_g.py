@@ -56,8 +56,18 @@ def m3u8_to_mp3_converter(name, url):
         out.write(ts_content)
 
 
+def m3u8_to_mp3_advanced(name, url):
+    ts_content = get_ts(url)
+    if ts_content is None:
+        raise TypeError("Empty mp3 content to save.")
+    with open(f'{name}x.mp3', 'wb') as out:
+        out.write(ts_content)
+    audioclip = AudioFileClip(f'{name}x.mp3')
+    audioclip.write_audiofile(f'{name}.mp3')
+    audioclip.close()
+
+
 if __name__ == '__main__':
-    # url = 'https://cs9-1v4.vkuseraudio.net/s/v1/ac/v_1Wu4yC_vkq1dPcKbyT0-CbmjlbehsFZfsvyNEfRIqRTgEfTzfkORSWpf7f3sqx04RuxK-jL1827XiorLsjZVhEJl2isdN_vDVSswIHZedMzI0CnajMwJZo6sjm9oArVrTlxuhflNO4L1CxC5z1-j3pAPAHs9pIhLrQQ8oLg2B60uo/index.m3u8'
     url = input('Type m3u8 url: ')
     name = input('Type filename: ')
-    m3u8_to_mp3_converter(name, url)
+    m3u8_to_mp3_advanced(name, url)
